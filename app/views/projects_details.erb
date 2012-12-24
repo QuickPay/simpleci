@@ -16,7 +16,8 @@
             <div class="item-detail italic"><%= @current_build.commit_message %>&nbsp;</div>
         </div>
     </a>
-    <div class="box build-output"><pre><%= @current_build.output %></pre></div>
+    <div id="build-output" class="box"><pre><%= @current_build.output %></pre></div>
+    <script type="text/javascript">if (o = document.getElementById('build-output')) { o.scrollTop = o.scrollHeight; }</script>
     <% for @build in @builds.reverse %>
         <a href="/projects/<%= @project.name %>/build/<%= @build.id %>">
             <div class="box list-item <%= @build.status ? "green": "red" %>">
