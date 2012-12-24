@@ -14,10 +14,6 @@ group :postgresql do
   gem "pg"
 end
 
-group :sqlite do
-  gem "sqlite3"
-end
-
 group :mysql do
   gem "mysql2"
 end
@@ -25,4 +21,5 @@ end
 group :development do
   gem "racksh"
   gem "shotgun"
+  gem "sqlite3"
 end
