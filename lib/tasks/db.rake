@@ -1,4 +1,7 @@
 # -*- encoding: utf-8; mode: ruby; tab-width: 2; indent-tabs-mode: nil -*-
+require "./config/environment"
+require "active_record"
+
 namespace :db do
 
   desc "Migrate database to different version (Target specific version with VERSION=x)"
@@ -23,6 +26,31 @@ namespace :db do
       load schema if FileTest.exist?(schema)
     end
   
+  end
+
+  desc "Reset database"
+  task :reset do
+    begin
+      re = ""
+      while not re =~ /(n|y)/
+        puts "@@@ Warning @@@"
+        puts "You are about to destroy data(!) - Do you want to continue? [y/n]"
+        re = STDIN.gets.chomp
+        if re == "y"
+          con = ActiveRecord::Base.retrieve_connection
+          tables = con.tables
+          tables.delete("schema_migrations")
+          tables.each do |t|
+            con.execute("DROP TABLE IF EXISTS #{t} CASCADE")
+          end
+          con.execute("TRUNCATE schema_migrations")
+          ActiveRecord::Migrator.migrate('migrate')
+          puts "Done!"
+        end
+      end
+    rescue Exception => e
+      puts e.message
+    end
   end
   
 end
