@@ -26,8 +26,8 @@ class Initial < ActiveRecord::Migration
       t.integer :user_id, :null => false
       t.integer :project_id, :null => false
     end
-    add_foreign_key(:users, :users_projects, column: "user_id")
-    add_foreign_key(:projects, :users_projects, column: "project_id")
+    add_foreign_key(:projects_users, :users, column: "user_id")
+    add_foreign_key(:projects_users, :projects, column: "project_id")
 
     create_table :builds do |t|
       t.timestamps
