@@ -1,0 +1,36 @@
+<div id="menu">
+    <a href="/projects" class="button list">Projects</a>
+    <% if @remote_user.admin %><a href="/users" class="button user">Users</a><% end %>
+    <div class="fright">
+        <% if @current_build %><a href="/projects/<%= @project.name %>/rebuild/<%= @current_build.id %>" class="button reload">Rebuild </a><% end %>
+        <a href="/projects/<%= @project.name %>" class="button magnifier">Diff</a>
+        <% if @remote_user.admin %><a href="/projects/<%= @project.name %>/settings" class="button cog">Settings</a><% end %>
+    </div>
+</div>
+
+<% if @builds.size > 0 %>
+    <a href="/projects/<%= @project.name %>/build/<%= @current_build.id %>">
+        <div class="box <%= @current_build.status ? "green": "red" %>">
+            <div class="item-header"><%= @project.name %></div>
+            <div class="item-detail">Build <%= @current_build.commit_version.to_s[0..9] %> <%= @current_build.status ? "passed" : "failed" %> at <%= @current_build.updated_at %></div>
+            <div class="item-detail italic"><%= @current_build.commit_message %>&nbsp;</div>
+        </div>
+    </a>
+    <div class="box build-output"><pre><%= @current_build.output %></pre></div>
+    <% for @build in @builds.reverse %>
+        <a href="/projects/<%= @project.name %>/build/<%= @build.id %>">
+            <div class="box list-item <%= @build.status ? "green": "red" %>">
+                <div class="item-detail">
+                    Build <%= @build.commit_version.to_s[0..9] %> <%= @build.status ? "passed" : "failed" %> at <%= @build.updated_at %>
+                </div>
+                <div class="item-detail italic"><%= @build.commit_message %>&nbsp;</div>
+            </div>
+        </a>
+    <% end %>
+<% else %>
+    <div class="box grey">
+        <div class="item-header"><%= @project.name %></div>
+        <div class="item-detail">No builds yet</div>
+        <div class="item-detail">No repository checkout yet</div>
+    </div>
+<% end %>

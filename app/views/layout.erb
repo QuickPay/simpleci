@@ -1,0 +1,144 @@
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SimpleCI - Continuous Integration</title>
+        <style type="text/css">
+            body {
+                margin: 20px 0;
+                padding: 0;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            input {
+                padding: 2px 10px;
+                border-radius: 10px;
+                border: 1px solid #aaa;
+                font-size: 1.5em;
+                color: #666;
+            }
+
+            div#container {
+                width: 950px;
+                margin: 0 auto;
+                text-align: left;
+            }
+
+            table.form {
+                width: 880px;
+            }
+            table.form td {
+                padding: 15px 5px;
+                vertical-align:top;
+            }
+            table.form td:first-child {
+                padding: 21px 5px;
+                text-align: right;
+                font-size: 1.5em;
+            }
+            table.form td:last-child input[type='text'], table.form td:last-child input[type='password'] { width: 100%; }
+            table.form tr.error td:last-child input { border-color: #ff4349; }
+            table.form td:last-child p { margin: 5px 10px ; }
+            table.form td:last-child pre { margin: 5px 10px ; }
+            table.form td:last-child ul { margin: 5px 0px ; }
+
+            .checkbox-item {
+                display: inline-block;
+                width: 49%;
+                margin: 10px 0 0px 0;
+                padding: 0;
+                background: transparent;
+                text-shadow: none;
+                font-size: 1.2em;
+            }
+
+            .button {
+                display: inline-block;
+                margin: 0px 10px;
+                padding: 3px 5px 3px 25px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                background-color: #eee;
+                background-repeat:no-repeat;
+                background-position: 5px center;
+                font-size: 14px;
+                line-height: 16px;
+                color: #666;
+            }
+            .button:hover {
+                background-color: #ddd;
+                border-color: #bbb;
+                color: #333;
+            }
+
+            .list { background-image: url('/gfx/list.png'); }
+            .add { background-image: url('/gfx/plus.png'); }
+            .user { background-image: url('/gfx/user.png'); }
+            .reload { background-image: url('/gfx/reload.png'); }
+            .magnifier { background-image: url('/gfx/magnifier.png'); }
+            .cog { background-image: url('/gfx/cog.png'); }
+            .check { background-image: url('/gfx/check.png'); }
+            .cancel { background-image: url('/gfx/cancel.png'); }
+            .cross { background-image: url('/gfx/cross.png'); }
+            .clapperboard { background-image: url('/gfx/clapperboard.png'); }
+            
+            .box {
+                margin: 10px;
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .list-item {
+                width: 433px;
+                display: inline-block;
+                margin: 10px;
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .item-header {
+                font-size: 1.8em;
+                font-weight: bold;
+            }
+            .item-detail {
+                padding: 2px 0;
+                font-size: 0.8em;
+                text-shadow: none;
+            }
+
+            .build-output {
+                max-height: 400px;
+                background: #333;
+                color: #fff;
+                overflow: auto;
+            }
+
+            p.error { color: #ff4349; }
+
+            .red, .red-nohover { background: #ff9a97; color: #a0363b; text-shadow: 0px 1px 1px #ffbeb8; }
+            .red:hover { background: #ff8792; }
+            .green, .green-nohover { background: #aedea5; color: #468d42; text-shadow: 0px 1px 1px #f0ffd7; }
+            .green:hover { background: #95da7f; }
+            .grey, .grey-nohover { background: #ddd; color: #777; text-shadow: 0px 1px 1px #f8f8f8; }
+            .grey:hover { background: #ccc; }
+
+            .italic { font-style: italic; }
+            .fright { float: right; }
+            .fleft { float: left; }
+            .tleft { text-align: left; }
+            .tright { text-align: right; }
+            .w100 { width: 100%; }
+
+        </style>
+	</head>
+	<body>
+        <div id="container">
+		    <%= yield %>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,8 @@
+.DS_Store
+.bundle/*
+db/*.*
+config/database.yml
+log/*
+tmp/*
+vendor/*
+testdata.rb

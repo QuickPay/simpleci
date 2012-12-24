@@ -1,0 +1,29 @@
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
+<div id="menu">
+    <a href="/scenes" class="button clapperboard">Scenarios</a>
+    <% if @remote_user.admin %>
+    <a href="/users" class="button user">Users</a>
+    <div class="fright">
+        <a href="/projects/new" class="button add">Add project</a>
+    </div>
+    <% end %>
+</div>
+
+<% for @project in @projects %>
+    <% @builds = @project.builds %>
+    <a href="/projects/<%= @project.name %>">
+        <% if @builds.size > 0 %>
+            <div class="box list-item <%= @builds.last.status ? "green": "red" %>">
+                <div class="item-header"><%= @project.name %></div>
+                <div class="item-detail">Build <%= @builds.last.commit_version.to_s[0..9] %> <%= @builds.last.status ? "passed" : "failed" %> at <%= @builds.last.updated_at %></div>
+                <div class="item-detail italic"><%= @builds.last.commit_message %>&nbsp;</div>
+            </div>
+        <% else %>
+            <div class="box list-item grey">
+                <div class="item-header"><%= @project.name %></div>
+                <div class="item-detail">No builds yet</div>
+                <div class="item-detail">No repository checkout yet</div>
+            </div>
+        <% end %>
+    </a>
+<% end %>

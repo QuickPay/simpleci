@@ -1,0 +1,113 @@
+<div id="menu">
+    <a href="/projects" class="button list">Projects</a>
+    <div class="fright">
+		<% if @project.persisted? %>
+			<a href="#" class="button cross" onclick="location.href='/projects/<%= @project_name %>/delete';">Delete</a>
+		<% end %>    	
+        <a href="#" class="button cancel" onclick="location.href='/projects/<%= @project_name %>';">Cancel</a>
+        <a href="#" class="button check" onclick="document.getElementById('projects-form').submit();">Save</a>
+    </div>
+</div>
+
+<% if @project.persisted? %>
+	<% if @builds.size > 0 %>
+	    <div class="box <%= @current_build.status ? "green-nohover": "red-nohover" %>">
+	        <div class="item-header"><%= @project_name %></div>
+	        <div class="item-detail">Build <%= @current_build.commit_version %> <%= @current_build.status ? "passed" : "failed" %> at <%= @current_build.updated_at %></div>
+	        <div class="item-detail italic"><%= @current_build.commit_message %></div>
+	    </div>
+	<% else %>
+	    <div class="box grey-nohover">
+	        <div class="item-header"><%= @project.name %></div>
+	        <div class="item-detail">No builds yet</div>
+	        <div class="item-detail">No repository checkout yet</div>
+	    </div>
+	<% end %>
+<% else %>
+	<div class="box grey-nohover">
+	    <div class="item-header">Create new project</div>
+	</div>
+<% end %>
+
+<div class="box grey-nohover">
+	<form id="projects-form" method="post" action="/projects<%= "/#{@project_name}" %>">
+		<table class="form">
+			<tr class="<%= e(:name, "error") %>">
+				<td><label for="name">Name:</label></td>
+				<td>
+					<input id="name" type="text" name="name" value="<%= @project.name if @project %>" />
+					<%= e(:name, '<p class="error">Error message(s): %s</p>') %>
+					<p>Must be a unique name, allowed chars are A-z, 0-9 and -</p>
+				</td>
+			</tr>
+			<tr class="<%= e(:path, "error") %>">
+				<td><label for="path">Path:</label></td>
+				<td>
+					<input id="path" type="text" name="path" value="<%= @project.path if @project %>" />
+					<%= e(:path, '<p class="error">Error message(s): %s</p>') %>
+					<p>Supports local and remote repositories via ssh. Examples:
+						<ul>
+							<li>git:///path/to/local/repository</li>
+							<li>git://git@github.com:user/repositry</li>
+							<li>hg:///path/to/local/repository</li>
+							<li>hg://hg@bitbucket.org/user/repository</li>
+						</ul>
+					</p>
+				</td>
+			</tr>
+			<tr class="<%= e(:branch, "error") %>">
+				<td><label for="branch">Branch:</label></td>
+				<td>
+					<input id="branch" type="text" name="branch" value="<%= @project.branch if @project %>" />
+					<%= e(:branch, '<p class="error">Error message(s): %s</p>') %>
+					<p>Branch in the repository. Defaults to "master"</p>
+				</td>
+			</tr>
+			<tr class="<%= e(:command, "error") %>">
+				<td><label for="command">Command:</label></td>
+				<td>
+					<input id="command" type="text" name="command" value="<%= @project.command if @project %>" />
+					<%= e(:command, '<p class="error">Error message(s): %s</p>') %>
+					<p>Example: bundle &amp;&amp; bundle exec rake test</p>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Watchers:</label></td>
+				<td>
+					<% for @user in @users %>
+						<div class="checkbox-item">
+							<input
+								id="user-<%= @user.id %>"
+								type="checkbox" 
+								name="users[<%= @user.id %>]" 
+								value="1"
+								<%= 'checked="checked"' if !!@project_users.index(@user.id) || @user.admin %>
+								<%= "disabled" if @user.admin %>
+							/> 
+							<label for="user-<%= @user.id %>"><%= @user.email %></label>
+						</div>
+					<% end %>
+				</td>
+			</tr>
+			<tr class="<%= e(:hook, "error") %>">
+				<td><label for="hook">Hook:</label></td>
+				<td>
+					<input id="hook" type="text" name="hook" value="<%= @project.hook if @project %>" />
+					<%= e(:hook, '<p class="error">Error message(s): %s</p>') %>
+					<p>When a build is completed this URL will receive a HTTP POST request with following JSON encoded data:
+						<pre>payload: {
+  status: true,
+  built_at: "2012-12-19 12:48:38 UTC",
+  project: "MyProject",
+  url: "http://simpleci.domain.tld/projects/MyProject"
+  commit_version: "c316b0fc",
+  commit_message: "Fixed regression",
+  commit_author: "John Doe"
+}</pre>
+					</p>
+				</td>
+			</tr>
+		</table>
+
+	</form>
+</div>

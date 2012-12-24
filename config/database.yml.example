@@ -1,0 +1,13 @@
+# -*- encoding: utf-8; mode: yaml; tab-width: 2; indent-tabs-mode: nil -*-
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  host: localhost
+  database: meci
+  username: admin
+  password: 1234

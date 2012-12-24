@@ -1,0 +1,16 @@
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
+<div id="menu">
+    <a href="/projects" class="button list">Projects</a>
+    <div class="fright">
+        <a href="/users/new" class="button add">Add user</a>
+    </div>
+</div>
+
+<% for @user in @users %>
+    <a href="/users/<%= @user.id %>">
+        <div class="box list-item <%= @user.admin ? "red": "grey" %>">
+            <div class="item-header"><%= @user.email %></div>
+            <div class="item-detail">Last updated at: <%= @user.updated_at %></div>
+        </div>
+    </a>
+<% end %>
