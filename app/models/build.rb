@@ -67,7 +67,7 @@ class Build < ActiveRecord::Base
   def self.hg(url, branch, id)
     url = "file://#{url}" if url.match(/^\//)
     m = Mercurial::Repository.clone(url, "tmp/#{id}", {})
-    c = m.commits.by_branch(:default).first
+    c = m.commits.by_branch(branch).first
 
     [c.hash_id, c.message, c.author]
   end
