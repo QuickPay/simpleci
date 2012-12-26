@@ -32,7 +32,7 @@ module SimpleCI
       # Run block of code in a seperate process
       def fire_and_forget &block
         raise ::LocalJumpError, "No block given" unless block_given?
-        Process.detach(fork &block)
+        Thread.new &block
       end
     end
 
