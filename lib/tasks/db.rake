@@ -1,18 +1,15 @@
 # -*- encoding: utf-8; mode: ruby; tab-width: 2; indent-tabs-mode: nil -*-
-require "./config/environment"
-require "active_record"
-
 namespace :db do
 
   desc "Migrate database to different version (Target specific version with VERSION=x)"
-  task :migrate do
+  task :migrate => :environment do
     ActiveRecord::Migrator.migrate("db/migrate", ENV["VERSION"] ? ENV["VERSION"].to_i : nil )
   end
   
   namespace :schema do
     
     desc "Dump database schema to db/schema.rb"
-    task :dump do
+    task :dump => :environment do
       schema = "db/schema.rb"
       FileUtils.touch(schema)
       # As schema is dumped to stdout, catch the content from there
@@ -29,7 +26,7 @@ namespace :db do
   end
 
   desc "Reset database"
-  task :reset do
+  task :reset => :environment do
     begin
       re = ""
       while not re =~ /(n|y)/
