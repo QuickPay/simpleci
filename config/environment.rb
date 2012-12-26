@@ -3,11 +3,11 @@
 # Set application root and loadpath
 APP_ROOT = File.realdirpath(File.dirname(__FILE__) + '/../')
 $LOAD_PATH.push(APP_ROOT)
+ENV["RACK_ENV"] ||= "development"
 
 # Load environment
 require "rubygems"
-require "bundler"
-Bundler.setup(:default, ENV["RACK_ENV"])
+require "bundler/setup"
 
 # Set up ActiveRecord and connect to DB
 require "active_record"
