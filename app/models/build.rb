@@ -22,6 +22,8 @@ class Build < ActiveRecord::Base
     rescue Exception => e
       b.update_attributes({:output => e.message})
       raise e
+    ensure
+      FileUtils.rm_rf("#{APP_ROOT}/tmp/#{b.id}")
     end
 
     unless project.hook.to_s.empty?
@@ -56,7 +58,7 @@ class Build < ActiveRecord::Base
   private
 
   def self.git(url, branch, id, commit = "HEAD")
-    g = Git.clone(url, "tmp/#{id}")
+    g = Git.clone(url, "#{APP_ROOT}/tmp/#{id}")
     g.branch("origin/#{branch}").checkout
     g.reset_hard(commit)
     c = g.gcommit(commit)
@@ -64,9 +66,9 @@ class Build < ActiveRecord::Base
     [c.sha, c.message, c.author.name]
   end
 
-  def self.hg(url, branch, id)
+  def self.hg(url, branch, id, commit = "HEAD")
     url = "file://#{url}" if url.match(/^\//)
-    m = Mercurial::Repository.clone(url, "tmp/#{id}", {})
+    m = Mercurial::Repository.clone(url, "#{APP_ROOT}/tmp/#{id}", {})
     c = m.commits.by_branch(branch).first
 
     [c.hash_id, c.message, c.author]
