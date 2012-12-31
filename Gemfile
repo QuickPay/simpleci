@@ -18,7 +18,13 @@ group :mysql do
   gem "mysql2"
 end
 
+group :test do
+  gem "rack-test"
+  gem "sqlite3"
+end
+
 group :development do
+  gem "rack-test"
   gem "racksh"
   gem "shotgun"
   gem "sqlite3"

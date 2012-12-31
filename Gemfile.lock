@@ -68,6 +68,7 @@ DEPENDENCIES
   mercurial-ruby
   mysql2
   pg
+  rack-test
   racksh
   rake
   shotgun
