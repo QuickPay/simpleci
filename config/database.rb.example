@@ -1,0 +1,12 @@
+# -*- encoding: utf-8; mode: ruby; tab-width: 2; indent-tabs-mode: nil -*-
+
+# Enviroment specific configuration example
+
+ENV['DATABASE_URL'] = case ENV['RACK_ENV']
+when "development"
+  "sqlite3:///tmp/simpleci.db"
+when "test"
+  "postgresql://<user>:<password>@<host>:<port>/<database>"
+else
+  ENV['DATABASE_URL'] # E.g. heroku default 
+end

@@ -1,7 +1,7 @@
 .DS_Store
 .bundle/*
 db/*.*
-config/database.yml
+config/database.rb
 log/*
 tmp/*
 vendor/*
