@@ -13,7 +13,7 @@
     <% @builds = @project.builds %>
     <a href="/projects/<%= @project.name %>">
         <% if @builds.size > 0 %>
-            <div class="box list-item <%= @builds.last.status ? "green": "red" %>">
+            <div class="box list-item <%= color_by_status @builds.last.status %>">
                 <div class="item-header"><%= @project.name %></div>
                 <div class="item-detail">Build <%= @builds.last.commit_version.to_s[0..9] %> <%= @builds.last.status ? "passed" : "failed" %> at <%= @builds.last.updated_at %></div>
                 <div class="item-detail italic"><%= @builds.last.commit_message %>&nbsp;</div>

@@ -10,7 +10,7 @@
 
 <% if @builds.size > 0 %>
     <a href="/projects/<%= @project.name %>/build/<%= @current_build.id %>">
-        <div class="box <%= @current_build.status ? "green": "red" %>">
+        <div class="box <%= color_by_status @current_build.status %>">
             <div class="item-header"><%= @project.name %></div>
             <div class="item-detail">Build <%= @current_build.commit_version.to_s[0..9] %> <%= @current_build.status ? "passed" : "failed" %> at <%= @current_build.updated_at %></div>
             <div class="item-detail italic"><%= @current_build.commit_message %>&nbsp;</div>
@@ -20,7 +20,7 @@
     <script type="text/javascript">if (o = document.getElementById('build-output')) { o.scrollTop = o.scrollHeight; }</script>
     <% for @build in @builds.reverse %>
         <a href="/projects/<%= @project.name %>/build/<%= @build.id %>">
-            <div class="box list-item <%= @build.status ? "green": "red" %>">
+            <div class="box list-item <%= color_by_status @build.status %>">
                 <div class="item-detail">
                     Build <%= @build.commit_version.to_s[0..9] %> <%= @build.status ? "passed" : "failed" %> at <%= @build.updated_at %>
                 </div>
