@@ -9,7 +9,7 @@ class Build < ActiveRecord::Base
   belongs_to :project
 
   def self.build!(project)
-    b = Build.create({ :project_id => project.id, :status => false })
+    b = Build.create({ :project_id => project.id })
     _, method, url = project.path.match(/^(git|hg):\/\/(.+)/).to_a
     
     begin 
