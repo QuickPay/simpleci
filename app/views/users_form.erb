@@ -64,7 +64,7 @@
 								<%= 'checked="checked"' if @user.persisted? and (!!@user_projects.index(@project.id) || @user.admin) %>
 								<%= "disabled" if @user.persisted? and @user.admin %>
 							/> 
-							<label for="project-<%= @project.id %>"><%= @project.name %></label>
+							<label for="project-<%= @project.id %>"><%= h @project.name %></label>
 						</div>
 					<% end %>
 				</td>

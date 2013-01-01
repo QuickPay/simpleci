@@ -84,7 +84,7 @@
 								<%= 'checked="checked"' if !!@project_users.index(@user.id) || @user.admin %>
 								<%= "disabled" if @user.admin %>
 							/> 
-							<label for="user-<%= @user.id %>"><%= @user.email %></label>
+							<label for="user-<%= @user.id %>"><%= h @user.email %></label>
 						</div>
 					<% end %>
 				</td>
