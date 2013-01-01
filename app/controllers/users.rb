@@ -5,15 +5,7 @@ require "app/models/user"
 
 class Users < SimpleCI::Base
 
-  helpers do
-    def e(name, out = nil)
-      err = @errors[name.to_sym] and @errors[name.to_sym].join(", ")
-      (out ? out % err : err) if err
-    end
-  end
-
   before do
-    @errors ||= {}
     @user_projects ||= []
   end
 

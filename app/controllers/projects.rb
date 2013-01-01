@@ -7,11 +7,6 @@ class Projects < SimpleCI::Base
   disable :authorization
 
   helpers do
-    def e(name, out = nil)
-      err = @errors[name.to_sym] and @errors[name.to_sym].join(", ")
-      (out ? out % err : err) if err
-    end
-    
     def status_color(status)
       case status
       when true
@@ -36,7 +31,6 @@ class Projects < SimpleCI::Base
   end
 
   before do
-    @errors ||= {}
     @builds ||= []
     @project_users ||= []
   end
