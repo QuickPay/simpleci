@@ -16,7 +16,7 @@ class Build < ActiveRecord::Base
       version, message, author = self.send(method, url, project.branch, b.id)
       b.update_attributes({:commit_version => version, :commit_message => message, :commit_author => author})
       output = Bundler.with_clean_env do
-        `cd #{APP_ROOT}/tmp/#{b.id} && #{project.command} 2>&1`
+        "Running command: #{project.command}\n\n" + `cd #{APP_ROOT}/tmp/#{b.id} && #{project.command} 2>&1`
       end
       b.update_attributes({:output => output, :status => $?.success?})
     rescue Exception => e
