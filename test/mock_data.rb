@@ -69,5 +69,6 @@ MSG
     b21 = Build.new({ :project_id => p2.id, :status => false, :output => msg.chop.chomp, :commit_version => Digest::MD5.hexdigest([*0..9].sample(5).join("")).slice(0,8), :commit_message => "Fixed regression", :commit_author => "Demo 1" }); b21.save
     b22 = Build.new({ :project_id => p2.id, :status => true, :output => msg.chop.chomp, :commit_version => Digest::MD5.hexdigest([*0..9].sample(5).join("")).slice(0,8), :commit_message => "Fixed regression", :commit_author => "Demo 1" }); b22.save
     b23 = Build.new({ :project_id => p2.id, :status => false, :output => msg.chop.chomp, :commit_version => Digest::MD5.hexdigest([*0..9].sample(5).join("")).slice(0,8), :commit_message => "Fixed regression", :commit_author => "Demo 1" }); b23.save
+    puts "Import of mock data to database done!\n\n"
   end
 end
