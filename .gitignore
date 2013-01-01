@@ -5,4 +5,3 @@ config/database.rb
 log/*
 tmp/*
 vendor/*
-testdata.rb

@@ -1,5 +1,5 @@
 # -*- encoding: utf-8; mode: ruby; tab-width: 2; indent-tabs-mode: nil -*-
-require './config/environment'
+$LOAD_PATH.push(File.realdirpath(File.dirname(__FILE__)))
 
 task :environment do
   require "./config/environment"
