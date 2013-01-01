@@ -18,6 +18,10 @@ You can hook it into other things like an IRC bot ([Bishop](https://github.com/t
 
 At this time you can open [http://localhost:8080](http://localhost:8080) in your browser and sign in with username "admin@domain.tld" and password "abcd1234" - You might want to change those!
 
+# Demo
+
+You can watch simpleci testing itself at [https://simpleci.herokuapp.com](https://simpleci.herokuapp.com) - log in with username "demo@domain.tld" and password "1234abcd". The user does not have administrator privileges. For that you need to run your own instance of simpleci as described in the Installation section.
+
 # Licence
 
 Copyright (c) 2012 Tonni Aagesen
