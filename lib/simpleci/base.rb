@@ -7,6 +7,7 @@ module SimpleCI
     attr_reader :body_params, :query_params
     
     register SimpleCI::Auth
+    register SimpleCI::View
 
     set :root, APP_ROOT
     set :views, "app/views"

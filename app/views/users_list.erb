@@ -9,7 +9,7 @@
 <% for @user in @users %>
     <a href="/users/<%= @user.id %>">
         <div class="box list-item <%= @user.admin ? "red": "grey" %>">
-            <div class="item-header"><%= @user.email %></div>
+            <div class="item-header"><%= h @user.email %></div>
             <div class="item-detail">Last updated at: <%= @user.updated_at %></div>
         </div>
     </a>
