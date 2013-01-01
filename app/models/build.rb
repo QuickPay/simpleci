@@ -20,7 +20,7 @@ class Build < ActiveRecord::Base
       end
       b.update_attributes({:output => output, :status => $?.success?})
     rescue Exception => e
-      b.update_attributes({:output => e.message})
+      b.update_attributes({:output => e.message, :status => false})
       raise e
     ensure
       FileUtils.rm_rf("#{APP_ROOT}/tmp/#{b.id}")
