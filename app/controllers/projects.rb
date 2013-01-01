@@ -34,7 +34,7 @@ class Projects < SimpleCI::Base
       @project_name = project_name
       @project = @remote_user.admin ? Project.find_by_name(project_name) : @remote_user.projects.find_by_name(project_name)
       halt 404, "Not Found" unless @project
-      @builds = @project.builds
+      @builds = @project.builds.order("updated_at ASC")
       @current_build = @builds.last
     end
   end
