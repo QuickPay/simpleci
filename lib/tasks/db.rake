@@ -28,7 +28,7 @@ namespace :db do
   desc "Reset database"
   task :reset => :environment do
     begin
-      re = ["development","test"].include?(ENV['RACK_ENV']) ? "y" : "";
+      re = ENV['RACK_ENV'] == "test" ? "y" : "";
       while not re =~ /(n|y)/
         puts "@@@ Warning @@@"
         puts "You are about to destroy data(!) - Do you want to continue? [y/n]"
@@ -43,7 +43,6 @@ namespace :db do
         end
         con.execute("TRUNCATE schema_migrations")
         Rake::Task['db:migrate'].execute
-        puts "Done!"
       end
     rescue Exception => e
       puts e.message
@@ -53,7 +52,7 @@ namespace :db do
   desc "Load test data into database"
   task :testdata => :environment do
     begin
-      re = ["development","test"].include?(ENV['RACK_ENV']) ? "y" : "";
+      re = ENV['RACK_ENV'] == "test" ? "y" : "";
       while not re =~ /(n|y)/
         puts "@@@ Warning @@@"
         puts "You are about to import test data(!) - Do you want to continue? [y/n]"
