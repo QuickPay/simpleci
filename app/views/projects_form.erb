@@ -11,9 +11,9 @@
 
 <% if @project.persisted? %>
 	<% if @builds.size > 0 %>
-	    <div class="box <%= @current_build.status ? "green-nohover": "red-nohover" %>">
+	    <div class="box <%= "#{status_color @current_build.status}-no-hover" %>">
 	        <div class="item-header"><%= h @project_name %></div>
-	        <div class="item-detail">Build <%= h @current_build.commit_version %> <%= @current_build.status ? "passed" : "failed" %> at <%= @current_build.updated_at %></div>
+	        <div class="item-detail">Build <%= h @current_build.commit_version %> <%= status_name @current_build.status %> at <%= @current_build.updated_at %></div>
 	        <div class="item-detail italic"><%= h @current_build.commit_message %></div>
 	    </div>
 	<% else %>

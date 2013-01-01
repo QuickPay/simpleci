@@ -11,7 +11,8 @@ class Projects < SimpleCI::Base
       err = @errors[name.to_sym] and @errors[name.to_sym].join(", ")
       (out ? out % err : err) if err
     end
-    def color_by_status(status)
+    
+    def status_color(status)
       case status
       when true
         "green"
@@ -19,6 +20,17 @@ class Projects < SimpleCI::Base
         "red"
       else
         "yellow"
+      end
+    end
+    
+    def status_name(status)
+      case status
+      when true
+        "passed"
+      when false
+        "failed"
+      else
+        "in progress"
       end
     end
   end
