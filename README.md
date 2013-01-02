@@ -11,10 +11,8 @@ You can hook it into other things like an IRC bot ([Bishop](https://github.com/t
     $ git clone git://github.com/ta/simpleci.git
     $ cd simpleci
     $ bundle install
-    $ cp config/database.yml.example config/database.yml
-    $ editor config/database.yml
     $ bundle exec rake db:migrate
-    $ bundle exec unicorn
+    $ DATABASE_URL=sqlite3:///tmp/simplci.db bundle exec unicorn
 
 At this time you can open [http://localhost:8080](http://localhost:8080) in your browser and sign in with username "admin@domain.tld" and password "abcd1234" - You might want to change those!
 
