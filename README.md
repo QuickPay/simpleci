@@ -2,7 +2,7 @@
 
 SimpleCI is a lightweigth continuous integration application build with [Sinatra](https://github.com/sinatra/sinatra).
 
-It handles both Git and Mercurial repositories (local and remote) and support activation by HTTP POST request.
+It handles both Git and Mercurial repositories (local and remote) and supports activation by HTTP POST requests.
 
 You can hook it into other things like an IRC bot ([Bishop](https://github.com/ta/bishop) supports this out of the box) by providing an URL for the Post-Build Hook. 
 
@@ -23,7 +23,7 @@ You can watch simpleci testing itself at [https://simpleci.herokuapp.com](https:
 
 # Licence
 
-Copyright (c) 2012 Tonni Aagesen
+Copyright (c) 2012-2013 Tonni Aagesen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
