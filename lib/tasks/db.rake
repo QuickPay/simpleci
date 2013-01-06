@@ -59,8 +59,8 @@ namespace :db do
         re = STDIN.gets.chomp
       end
       if re == "y"
-        require "test/mock_data"
-        MockData.import
+        require "test/mock/data"
+        Mock::Data.import
       end
     rescue Exception => e
       puts e.message
