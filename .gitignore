@@ -1,7 +1,11 @@
 .DS_Store
 .bundle/*
+.powenv
 db/*.*
 config/database.rb
+config/unicorn.conf.rb
 log/*
+test/mock/foo.git
+test/mock/bar.hg
 tmp/*
 vendor/*

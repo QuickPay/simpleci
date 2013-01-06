@@ -6,6 +6,7 @@ gem "foreigner"
 gem "git"
 gem "mercurial-ruby"
 gem "rake"
+gem "archive-zip"
 gem "sinatra"
 gem 'sinatra-contrib'
 gem 'unicorn'
