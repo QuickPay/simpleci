@@ -1,74 +1,66 @@
-<div id="menu">
-    <a href="/users" class="button user">Users</a>
-    <div class="fright">
-		<% if @user.persisted? %>
-			<a href="#" class="button cross" onclick="location.href='/users/<%= @user.id %>/delete';">Delete</a>
-		<% end %>
-		<a href="/users" class="button cancel">Cancel</a>
-        <a href="#" class="button check" onclick="document.getElementById('users-form').submit();">Save</a>
-    </div>
-</div>
-
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
 <% if @user.persisted? %>
-    <a href="/users/<%= @user.id %>">
-        <div class="box <%= @user.admin ? "red": "grey" %>">
-            <div class="item-header"><%= @user.email %></div>
-            <div class="item-detail">Last updated at: <%= @user.updated_at %></div>
-        </div>
-    </a>
+    <h1>Edit user</h1>
 <% else %>
-	<div class="box grey-nohover">
-	    <div class="item-header">Create new user</div>
-	</div>
+	<h1>Create new user</h1>
 <% end %>
+<p>&nbsp;</p>
 
-<div class="box grey-nohover">
-	<form id="users-form" method="post" action="/users<%= "/#{@user.id}" if @user %>">
-		<table class="form">
-			<tr class="<%= e(:email, "error") %>">
-				<td><label for="email">E-mail:</label></td>
-				<td>
-					<input id="email" type="text" name="email" value="<%= h @user.email if @user %>" />
-					<%= e(:email, '<p class="error">Error message(s): %s</p>') %>
-					<p>Must be a unique e-mail address</p>
-				</td>
-			</tr>
-			<tr class="<%= e(:password, "error") %>">
-				<td><label for="password">Password:</label></td>
-				<td>
-					<input id="password" type="password" name="password" />
-					<%= e(:password, '<p class="error">Error message(s): %s</p>') %>
-					<input id="password_confirmation" type="password" name="password_confirmation" />
-					<%= e(:password_confirmation, '<p class="error">Error message(s): %s</p>') %>
-					<p>Must be at least 7 chars long. Confirm password by writing it in both input fields.</p>
-				</td>
-			</tr>
-			<tr class="<%= e(:admin, "error") %>">
-				<td>Role:</td>
-				<td>
-					<div class="checkbox-item">
-						<input id="admin" type="checkbox" name="admin" value="1" <%= 'checked="checked"' if @user.persisted? and @user.admin %> /> 
-						<label for="admin">Administrator</label>
-				</td>
-			</tr>
-			<tr>
-				<td><label>Projects:</label></td>
-				<td>
-					<% for @project in @projects %>
-						<div class="checkbox-item">
-							<input
-								id="project-<%= @project.id %>"
-								type="checkbox" 
-								name="projects[<%= @project.id %>]" 
-								value="1"
-								<%= 'checked="checked"' if @user.persisted? and (!!@user_projects.index(@project.id) || @user.admin) %>
-								<%= "disabled" if @user.persisted? and @user.admin %>
-							/> 
-							<label for="project-<%= @project.id %>"><%= h @project.name %></label>
-						</div>
-					<% end %>
-				</td>
-			</tr>
-		</table>
-	</form>
-</div>
+<form id="users-form" class="form-horizontal" role="form" method="post" action="/users<%= "/#{@user.id}" if @user %>">
+    <div class="form-group">
+        <label for="email" class="col-lg-2 control-label">E-mail: </label>
+        <div class="col-lg-10">
+            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="<%= h @user.email if @user %>">
+            <%= e(:email, '<p class="error">Error message(s): %s</p>') %>
+            <p>Must be a unique e-mail address</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-lg-2 control-label">Password: </label>
+        <div class="col-lg-10">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <%= e(:password, '<p class="error">Error message(s): %s</p>') %>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm password">
+            <%= e(:password_confirmation, '<p class="error">Error message(s): %s</p>') %>
+            <p>Must be at least 7 chars long. Confirm password by writing it in both input fields.</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Role: </label>
+        <div class="col-lg-10">
+            <input id="admin" type="checkbox" name="admin" value="1" <%= 'checked="checked"' if @user.persisted? and @user.admin %> /> 
+            <label for="admin">Administrator</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Projects: </label>
+        <div class="col-lg-10">
+        <% for @project in @projects %>
+            <div class="checkbox-item">
+                <input
+                    id="project-<%= @project.id %>"
+                    type="checkbox" 
+                    name="projects[<%= @project.id %>]" 
+                    value="1"
+                    <%= 'checked="checked"' if @user.persisted? and (!!@user_projects.index(@project.id) || @user.admin) %>
+                    <%= "disabled" if @user.persisted? and @user.admin %>
+                /> 
+                <label for="project-<%= @project.id %>"><%= h @project.name %></label>
+            </div>
+        <% end %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+        	<% if @user.persisted? %>
+        		<a href="#" class="btn btn-danger" onclick="location.href='/users/<%= @user.id %>/delete';">Delete</a>
+        	<% end %>
+        	<a href="/users" class="btn btn-default">Cancel</a>
+            <a href="#" class="btn btn-primary" onclick="document.getElementById('users-form').submit();">Save</a>
+        </div>
+    </div>
+</form>

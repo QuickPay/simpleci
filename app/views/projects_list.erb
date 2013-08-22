@@ -1,29 +1,25 @@
 <!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
-<div id="menu">
-    <a href="/scenes" class="button clapperboard">Scenarios</a>
-    <% if @remote_user.admin %>
-    <a href="/users" class="button user">Users</a>
-    <div class="fright">
-        <a href="/projects/new" class="button add">Add project</a>
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <% for @project in @projects %>
+                <% @builds = @project.builds %>
+                <a href="/projects/<%= uh @project.name %>">
+                    <% if @builds.size > 0 %>
+                        <div class="alert alert-block <%= status_class @builds.last.status %>">
+                            <h2><%= h @project.name %></h2>
+                            <p>Build <%= h @builds.last.commit_version.to_s[0..9] %> <%= status_name @builds.last.status %> at <%= @builds.last.updated_at %></p>
+                            <p><em><%= h @builds.last.commit_message %>&nbsp;</em></p>
+                        </div>
+                    <% else %>
+                        <div class="alert alert-block alert-info">
+                            <h2><%= h @project.name %></h2>
+                            <p>No builds yet</p>
+                            <p>No repository checkout yet</p>
+                        </div>
+                    <% end %>
+                </a>
+            <% end %>
+        </div>
     </div>
-    <% end %>
 </div>
-
-<% for @project in @projects %>
-    <% @builds = @project.builds %>
-    <a href="/projects/<%= uh @project.name %>">
-        <% if @builds.size > 0 %>
-            <div class="box list-item <%= status_color @builds.last.status %>">
-                <div class="item-header"><%= h @project.name %></div>
-                <div class="item-detail">Build <%= h @builds.last.commit_version.to_s[0..9] %> <%= status_name @builds.last.status %> at <%= @builds.last.updated_at %></div>
-                <div class="item-detail italic"><%= h @builds.last.commit_message %>&nbsp;</div>
-            </div>
-        <% else %>
-            <div class="box list-item grey">
-                <div class="item-header"><%= h @project.name %></div>
-                <div class="item-detail">No builds yet</div>
-                <div class="item-detail">No repository checkout yet</div>
-            </div>
-        <% end %>
-    </a>
-<% end %>

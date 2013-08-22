@@ -1,101 +1,81 @@
-<div id="menu">
-    <a href="/projects" class="button list">Projects</a>
-    <div class="fright">
-		<% if @project.persisted? %>
-			<a href="#" class="button cross" onclick="location.href='/projects/<%= uh @project_name %>/delete';">Delete</a>
-		<% end %>    	
-        <a href="#" class="button cancel" onclick="location.href='/projects/<%= uh @project_name %>';">Cancel</a>
-        <a href="#" class="button check" onclick="document.getElementById('projects-form').submit();">Save</a>
-    </div>
-</div>
-
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
 <% if @project.persisted? %>
-	<% if @builds.size > 0 %>
-	    <div class="box <%= "#{status_color @current_build.status}-nohover" %>">
-	        <div class="item-header"><%= h @project_name %></div>
-	        <div class="item-detail">Build <%= h @current_build.commit_version %> <%= status_name @current_build.status %> at <%= @current_build.updated_at %></div>
-	        <div class="item-detail italic"><%= h @current_build.commit_message %></div>
-	    </div>
-	<% else %>
-	    <div class="box grey-nohover">
-	        <div class="item-header"><%= h @project.name %></div>
-	        <div class="item-detail">No builds yet</div>
-	        <div class="item-detail">No repository checkout yet</div>
-	    </div>
-	<% end %>
+    <h1>Edit project</h1>
 <% else %>
-	<div class="box grey-nohover">
-	    <div class="item-header">Create new project</div>
-	</div>
+	<h1>Create new project</h1>
 <% end %>
+<p>&nbsp;</p>
 
-<div class="box grey-nohover">
-	<form id="projects-form" method="post" action="/projects<%= "/#{uh @project_name}" %>">
-		<table class="form">
-			<tr class="<%= e(:name, "error") %>">
-				<td><label for="name">Name:</label></td>
-				<td>
-					<input id="name" type="text" name="name" value="<%= h @project.name if @project %>" />
-					<%= e(:name, '<p class="error">Error message(s): %s</p>') %>
-					<p>Must be a unique name, allowed chars are A-z, 0-9 and -</p>
-				</td>
-			</tr>
-			<tr class="<%= e(:path, "error") %>">
-				<td><label for="path">Path:</label></td>
-				<td>
-					<input id="path" type="text" name="path" value="<%= h @project.path if @project %>" />
-					<%= e(:path, '<p class="error">Error message(s): %s</p>') %>
-					<p>Supports local and remote repositories via ssh. Examples:
-						<ul>
-							<li>git:///path/to/local/repository</li>
-							<li>git://git@github.com:user/repositry</li>
-							<li>hg:///path/to/local/repository</li>
-							<li>hg://ssh://hg@bitbucket.org/user/repository</li>
-						</ul>
-					</p>
-				</td>
-			</tr>
-			<tr class="<%= e(:branch, "error") %>">
-				<td><label for="branch">Branch:</label></td>
-				<td>
-					<input id="branch" type="text" name="branch" value="<%= h @project.branch if @project %>" />
-					<%= e(:branch, '<p class="error">Error message(s): %s</p>') %>
-					<p>Branch in the repository. Defaults to "master"</p>
-				</td>
-			</tr>
-			<tr class="<%= e(:command, "error") %>">
-				<td><label for="command">Command:</label></td>
-				<td>
-					<input id="command" type="text" name="command" value="<%= h @project.command if @project %>" />
-					<%= e(:command, '<p class="error">Error message(s): %s</p>') %>
-					<p>Example: bundle &amp;&amp; bundle exec rake test</p>
-				</td>
-			</tr>
-			<tr>
-				<td><label>Watchers:</label></td>
-				<td>
-					<% for @user in @users %>
-						<div class="checkbox-item">
-							<input
-								id="user-<%= @user.id %>"
-								type="checkbox" 
-								name="users[<%= @user.id %>]" 
-								value="1"
-								<%= 'checked="checked"' if !!@project_users.index(@user.id) || @user.admin %>
-								<%= "disabled" if @user.admin %>
-							/> 
-							<label for="user-<%= @user.id %>"><%= h @user.email %></label>
-						</div>
-					<% end %>
-				</td>
-			</tr>
-			<tr class="<%= e(:hook, "error") %>">
-				<td><label for="hook">Hook:</label></td>
-				<td>
-					<input id="hook" type="text" name="hook" value="<%= h @project.hook if @project %>" />
-					<%= e(:hook, '<p class="error">Error message(s): %s</p>') %>
-					<p>When a build is completed this URL will receive a HTTP POST request with following JSON encoded data:
-						<pre>payload: {
+<form id="projects-form" class="form-horizontal" role="form" method="post" action="/projects<%= "/#{@project.id}" if @project %>">
+    <div class="form-group">
+        <label for="name" class="col-lg-2 control-label">Name: </label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<%= h @project.name if @project %>">
+            <%= e(:name, '<p class="error">Error message(s): %s</p>') %>
+            <p>Must be a unique name, allowed chars are A-z, 0-9 and -</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="path" class="col-lg-2 control-label">Path: </label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="path" name="path" placeholder="Path" value="<%= h @project.path if @project %>">
+            <%= e(:path, '<p class="error">Error message(s): %s</p>') %>
+            <p>Supports local and remote repositories via ssh. Examples:
+                <ul>
+                    <li>git:///path/to/local/repository</li>
+                    <li>git://git@github.com:user/repositry</li>
+                    <li>hg:///path/to/local/repository</li>
+                    <li>hg://ssh://hg@bitbucket.org/user/repository</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="branch" class="col-lg-2 control-label">Branch: </label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="branch" name="branch" placeholder="Branch" value="<%= h @project.branch if @project %>">
+            <%= e(:branch, '<p class="error">Error message(s): %s</p>') %>
+            <p>Branch in the repository. Defaults to "master"</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="command" class="col-lg-2 control-label">Command: </label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="command" name="command" placeholder="Command" value="<%= h @project.command if @project %>">
+            <%= e(:command, '<p class="error">Error message(s): %s</p>') %>
+            <p>Example: bundle &amp;&amp; bundle exec rake test</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="watchers" class="col-lg-2 control-label">Watchers: </label>
+        <div class="col-lg-10">
+        <% for @user in @users %>
+            <div class="checkbox-item">
+                <input
+                    id="user-<%= @user.id %>"
+                    type="checkbox" 
+                    name="users[<%= @user.id %>]" 
+                    value="1"
+                    <%= 'checked="checked"' if !!@project_users.index(@user.id) || @user.admin %>
+                    <%= "disabled" if @user.admin %>
+                /> 
+                <label for="user-<%= @user.id %>"><%= h @user.email %></label>
+            </div>
+        <% end %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="hook" class="col-lg-2 control-label">Hook: </label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="hook" name="hook" placeholder="Hook url" value="<%= h @project.hook if @project %>">
+            <%= e(:hook, '<p class="error">Error message(s): %s</p>') %>
+            <p>When a build is completed this URL will receive a HTTP POST request with following JSON encoded data:
+            <pre>payload: {
   status: true,
   built_at: "2012-12-19 12:48:38 UTC",
   project: "MyProject",
@@ -104,10 +84,17 @@
   commit_message: "Fixed regression",
   commit_author: "John Doe"
 }</pre>
-					</p>
-				</td>
-			</tr>
-		</table>
+            </p>
+        </div>
+    </div>
 
-	</form>
-</div>
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <% if @project.persisted? %>
+                <a href="#" class="btn btn-danger" onclick="location.href='/projects/<%= uh @project_name %>/delete';">Delete</a>
+            <% end %>       
+            <a href="#" class="btn btn-default" onclick="location.href='/projects/<%= uh @project_name %>';">Cancel</a>
+            <a href="#" class="btn btn-primary" onclick="document.getElementById('projects-form').submit();">Save</a>
+        </div>
+    </div>
+</form>

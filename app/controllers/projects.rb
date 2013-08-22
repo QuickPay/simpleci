@@ -7,14 +7,14 @@ class Projects < SimpleCI::Base
   disable :authorization
 
   helpers do
-    def status_color(status)
+    def status_class(status)
       case status
       when true
-        "green"
+        "alert-success"
       when false
-        "red"
+        "alert-danger"
       else
-        "yellow"
+        ""
       end
     end
     

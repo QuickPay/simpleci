@@ -1,37 +1,44 @@
-<div id="menu">
-    <a href="/projects" class="button list">Projects</a>
-    <% if @remote_user.admin %><a href="/users" class="button user">Users</a><% end %>
-    <div class="fright">
-        <% if @current_build %><a href="/projects/<%= uh @project.name %>/rebuild/<%= @current_build.id %>" class="button reload">Rebuild </a><% end %>
-        <a href="/projects/<%= uh @project.name %>" class="button magnifier">Diff</a>
-        <% if @remote_user.admin %><a href="/projects/<%= uh @project.name %>/settings" class="button cog">Settings</a><% end %>
-    </div>
-</div>
-
-<% if @builds.size > 0 %>
-    <a href="/projects/<%= uh @project.name %>/build/<%= @current_build.id %>">
-        <div class="box <%= status_color @current_build.status %>">
-            <div class="item-header"><%= h @project.name %></div>
-            <div class="item-detail">Build <%= h @current_build.commit_version.to_s[0..9] %> <%= status_name @current_build.status %> at <%= @current_build.updated_at %></div>
-            <div class="item-detail italic"><%= h @current_build.commit_message %>&nbsp;</div>
-        </div>
-    </a>
-    <div id="build-output" class="box"><pre><%= h @current_build.output %></pre></div>
-    <script type="text/javascript">if (o = document.getElementById('build-output')) { o.scrollTop = o.scrollHeight; }</script>
-    <% for @build in @builds.reverse %>
-        <a href="/projects/<%= uh @project.name %>/build/<%= @build.id %>">
-            <div class="box list-item <%= status_color @build.status %>">
-                <div class="item-detail">
-                    Build <%= h @build.commit_version.to_s[0..9] %> <%= status_name @build.status %> at <%= @build.updated_at %>
-                </div>
-                <div class="item-detail italic"><%= h @build.commit_message %>&nbsp;</div>
+<!-- -*- encoding: utf-8; mode: html; tab-width: 4; indent-tabs-mode: nil -*- -->
+<div class="container">    
+    <% if @builds.size > 0 %>
+        <div class="row">
+            <div class="span12">
+                    <div class="alert alert-block <%= status_class @current_build.status %>">
+                        <a class="pull-right" style="color: inherit" href="/projects/<%= uh @project.name %>/settings"><i class="icon-cogs"></i></a>
+                        <h2><%= h @project.name %></h2>
+                        <p>Build <%= h @current_build.commit_version.to_s[0..9] %> <%= status_name @current_build.status %> at <%= @current_build.updated_at %></p>
+                        <p><em><%= h @current_build.commit_message %>&nbsp;</em></p>
+                    </div>
             </div>
-        </a>
-    <% end %>
-<% else %>
-    <div class="box grey">
-        <div class="item-header"><%= @project.name %></div>
-        <div class="item-detail">No builds yet</div>
-        <div class="item-detail">No repository checkout yet</div>
-    </div>
-<% end %>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <div id="build-output" class="box"><pre><%= h @current_build.output %></pre></div>
+                <script type="text/javascript">if (o = document.getElementById('build-output')) { o.scrollTop = o.scrollHeight; }</script>
+            </div>
+        </div>
+        <h2>Builds</h2>
+        <% for @build in @builds.reverse %>
+            <div class="row">
+                <div class="span12">
+                    <a href="/projects/<%= uh @project.name %>/build/<%= @build.id %>">
+                        <div class="alert alert-block <%= status_class @build.status %>">
+                            <p>Build <%= h @build.commit_version.to_s[0..9] %> <%= status_name @build.status %> at <%= @build.updated_at %></p>
+                            <p><em><%= h @build.commit_message %>&nbsp;</em></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <% end %>
+    <% else %>
+        <div class="row">
+            <div class="span12">
+                <div class="alert alert-block alert-info">
+                    <h2><%= @project.name %></h2>
+                    <p>No builds yet</p>
+                    <p>No repository checkout yet</p>
+                </div>
+            </div>
+        </div>
+    <% end %>    
+</div>
