@@ -3,7 +3,7 @@
     <% if @builds.size > 0 %>
         <div class="row">
             <div class="span12">
-                    <div class="alert alert-block <%= status_class @current_build.status %>">
+                    <div class="alert <%= status_class @current_build.status %>">
                         <a class="pull-right" style="color: inherit" href="/projects/<%= uh @project.name %>/settings"><i class="icon-cogs"></i></a>
                         <h2><%= h @project.name %></h2>
                         <p>Build <%= h @current_build.commit_version.to_s[0..9] %> <%= status_name @current_build.status %> at <%= @current_build.updated_at %></p>
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="span12">
                     <a href="/projects/<%= uh @project.name %>/build/<%= @build.id %>">
-                        <div class="alert alert-block <%= status_class @build.status %>">
+                        <div class="alert <%= status_class @build.status %>">
                             <p>Build <%= h @build.commit_version.to_s[0..9] %> <%= status_name @build.status %> at <%= @build.updated_at %></p>
                             <p><em><%= h @build.commit_message %>&nbsp;</em></p>
                         </div>
@@ -33,7 +33,7 @@
     <% else %>
         <div class="row">
             <div class="span12">
-                <div class="alert alert-block alert-info">
+                <div class="alert alert-info">
                     <h2><%= @project.name %></h2>
                     <p>No builds yet</p>
                     <p>No repository checkout yet</p>

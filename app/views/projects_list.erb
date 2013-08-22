@@ -6,13 +6,13 @@
                 <% @builds = @project.builds %>
                 <a href="/projects/<%= uh @project.name %>">
                     <% if @builds.size > 0 %>
-                        <div class="alert alert-block <%= status_class @builds.last.status %>">
+                        <div class="alert <%= status_class @builds.last.status %>">
                             <h2><%= h @project.name %></h2>
                             <p>Build <%= h @builds.last.commit_version.to_s[0..9] %> <%= status_name @builds.last.status %> at <%= @builds.last.updated_at %></p>
                             <p><em><%= h @builds.last.commit_message %>&nbsp;</em></p>
                         </div>
                     <% else %>
-                        <div class="alert alert-block alert-info">
+                        <div class="alert alert-info">
                             <h2><%= h @project.name %></h2>
                             <p>No builds yet</p>
                             <p>No repository checkout yet</p>

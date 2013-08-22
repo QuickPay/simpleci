@@ -14,7 +14,7 @@ class Projects < SimpleCI::Base
       when false
         "alert-danger"
       else
-        ""
+        "alert-warning"
       end
     end
     
