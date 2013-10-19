@@ -6,7 +6,7 @@
 <% end %>
 <p>&nbsp;</p>
 
-<form id="projects-form" class="form-horizontal" role="form" method="post" action="/projects<%= "/#{@project.id}" if @project %>">
+<form id="projects-form" class="form-horizontal" role="form" method="post" action="/projects<%= "/#{@project.name}" if @project %>">
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">Name: </label>
         <div class="col-lg-10">
