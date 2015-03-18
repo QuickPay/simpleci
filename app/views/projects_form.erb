@@ -44,7 +44,7 @@
     <div class="form-group">
         <label for="command" class="col-lg-2 control-label">Command: </label>
         <div class="col-lg-10">
-            <input type="text" class="form-control" id="command" name="command" placeholder="Command" value="<%= h @project.command if @project %>">
+            <textarea class="form-control" id="command" name="command" placeholder="Command" rows="7"><%= h @project.command if @project %></textarea>
             <%= e(:command, '<p class="error">Error message(s): %s</p>') %>
             <p>Example: bundle &amp;&amp; bundle exec rake test</p>
         </div>
